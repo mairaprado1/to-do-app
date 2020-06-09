@@ -1,0 +1,26 @@
+.maindiv {
+margin-left: 5vw;
+
+
+
+}
+
+.title {
+  font-size: 10em;
+  padding-bottom: 20px;
+}
+
+.li {
+  padding: 10px;
+  font-size: 4em;
+}
+
+.deletebtn {
+  padding: 10px;
+}
+
+input[type="checkbox"] {
+width: 200px;
+height: 40px;
+
+}
