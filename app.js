@@ -1,55 +1,64 @@
 function onReady() {
+  let id = 0;
+
+  let toDos = [];
+
   const addToDoForm = document.getElementById("addToDoForm");
-  const newToDoText = document.getElementById("newToDoText");
-  const toDoList = document.getElementById("toDoList");
+
+  function createNewToDo() {
+    const newToDoText = document.getElementById("newToDoText");
+
+    if(!newToDoText.value) { return; }
+    toDos.push( {
+      title: newToDoText.value,
+      complete: false,
+      id: id
+    });
+    id = id + 1;
+
+    newToDoText.value = "";
+
+    renderTheUI();
+  }
+
+  function renderTheUI() {
+    console.log(toDos);
+    const toDoList = document.getElementById("toDoList");
+
+    toDoList.textContent = "";
+
+    toDos.forEach(function(toDo) {
+      const newLi = document.createElement("li");
+      const checkbox = document.createElement("input");
+      const btn = document.createElement("button");
+      btn.textContent = "Delete";
+      checkbox.type = "checkbox";
+
+      btn.addEventListener("click", function() {
+        toDos = toDos.filter(element =>  element.id != toDo.id )
+
+        renderTheUI();
+      })
+
+      newLi.textContent = toDo.title;
+
+      toDoList.appendChild(newLi);
+      newLi.appendChild(checkbox);
+      newLi.appendChild(btn);
+
+    });
+  }
+
+
 
   addToDoForm.addEventListener("submit", event => {
     event.preventDefault();
-
-    //get the newToDoText
-    let title = newToDoText.value;
-
-    //create a new li
-    let newLi = document.createElement("li");
-
-    newLi.setAttribute("class", "li");
-
-    //create a new imput
-    let checkbox = document.createElement("input");
-
-    let btn = document.createElement("button");
-
-    btn.setAttribute("class", "deletebtn");
-
-    btn.textContent = "Delete";
-
-    btn.addEventListener("click", function() {
-      toDoList.removeChild(this.parentElement);
-    })
-
-    //set the input's type to checkbox
-    checkbox.type = "checkbox";
-
-    //set the title
-    newLi.textContent = title;
-
-    //attach the checkbox to the li
-    newLi.appendChild(checkbox);
-
-    newLi.appendChild(btn);
-
-    //attach the li to the ul
-    toDoList.appendChild(newLi);
-
-    //empty the input
-    newToDoText.value = "";
+    createNewToDo();
+  })
 
 
 
-  });
-
-
-
+  renderTheUI();
 
 }
 
